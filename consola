@@ -1,0 +1,61 @@
+from service.FilmService import FilmService
+
+class Consola:
+    def __init__(self, filmService: FilmService):
+        self.__filmService = filmService
+
+    def adaugaFilm(self):
+        try:
+            idFilm = input("Dati id-ul filmului ")
+            titlu = input("Dati titlul filmului ")
+            descriere = input("Dati descriere filmului ")
+            gen = input("Dati genul filmului ")
+            self.__filmService.adauga(idFilm,titlu,descriere,gen)
+        except KeyError as e:
+            print(e)
+
+    def modificaFilm(self):
+        try:
+            idFilm = input("Dati id-ul filmului de modificat ")
+            titluNou = input("Dati titlu nou filmului ")
+            descriereNou = input("Dati descriere noua filmului ")
+            genNou = input("Dati genul nou filmului ")
+            self.__filmService.modifica(idFilm,titluNou,descriereNou,genNou)
+        except KeyError as e:
+            print(e)
+
+    def sterge(self):
+        try:
+            idFilm = input("Dati id-ul filmului de sters")
+            self.__filmService.sterge(idFilm)
+        except KeyError as e:
+            print(e)
+
+    def afiseaza(self, entitati):
+        for entitate in entitati:
+            print (entitate)
+
+
+    def printMeniu(self):
+        print("1.Adauga film ")
+        print("2.Modifica film ")
+        print("3.Stege film ")
+        print("a.Afiseaza filmele ")
+        print("x.Iesire ")
+
+    def meniu(self):
+        while True:
+            self.printMeniu()
+            optiune = input("Dati optiunea:")
+            if optiune == "1":
+                self.adaugaFilm()
+            elif optiune == "2":
+                self.modificaFilm()
+            elif optiune == "3":
+                self.sterge()
+            elif optiune == "a":
+                self.afiseaza(self.__filmService.getAllFilme())
+            elif optiune == "x":
+                break
+            else:
+                print("Optiune gresita")
