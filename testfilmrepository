@@ -1,0 +1,59 @@
+from domeniu.film import Film
+from repository.filmRepository import FilmRepository
+
+
+def testAdaugaFilmRepository():
+    filmRepository = FilmRepository()
+    film = Film("1", "avegers", "filmfilm","sf")
+
+    filmRepository.adauga(film)
+
+    filme = filmRepository.getAll()
+    assert len(filme) == 1
+    assert filme[0].getidFilm()=="1"
+
+
+    try:
+        filmRepository.adauga(film)
+        assert False
+    except KeyError:
+        ...
+
+
+def testModificaFilmRepository():
+    filmRepository = FilmRepository()
+    film = Film("1", "avegers", "filmfilm", "sf")
+    film2 = Film("2", "avegers", "filmfilm", "sf")
+    filmnou1=Film("1", "ironman", "filmfilm", "sf")
+
+    filmRepository.adauga(film)
+    filmRepository.adauga(film2)
+
+    filmRepository.modifica(film)
+    filme = filmRepository.getAll()
+    assert len(filme) == 2
+    assert filme[0].getidFilm() == "1"
+    assert filme[1].getidFilm() == "2"
+
+    try:
+        filmRepository.modifica(filmnou1)
+
+    except KeyError:
+        ...
+
+
+def teststergefilmrepository():
+    filmRepository = FilmRepository()
+    film = Film("1", "avegers", "filmfilm", "sf")
+
+    filmRepository.adauga(film)
+
+    filmRepository.sterge("1")
+
+    assert  len(filmRepository.getAll()) == 0
+
+    try:
+        filmRepository.sterge("!")
+        assert False
+    except KeyError:
+        ...
