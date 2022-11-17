@@ -1,0 +1,15 @@
+from service.FilmService import FilmService
+from repository.filmRepository import FilmRepository
+from teste.testAll import testAll
+from ui.consola.consola import Consola
+
+
+def main():
+    testAll()
+    filmRepository = FilmRepository()
+    filmService = FilmService(filmRepository)
+    consola = Consola(filmService)
+
+    consola.meniu()
+
+main()
