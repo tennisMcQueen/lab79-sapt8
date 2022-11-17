@@ -1,0 +1,14 @@
+from teste.testFilm import testFilm, testFilmSetteri
+from teste.testFilmService import testAdaugaService, testModificaService, testStergeService
+from teste.testfilmRepository import testAdaugaFilmRepository, testModificaFilmRepository, teststergefilmrepository
+
+
+def testAll():
+    testFilm()
+    testFilmSetteri()
+    testAdaugaFilmRepository()
+    testModificaFilmRepository()
+    teststergefilmrepository()
+    testAdaugaService()
+    testModificaService()
+    testStergeService()
