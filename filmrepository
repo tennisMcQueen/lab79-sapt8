@@ -1,0 +1,60 @@
+#rolul Repository este doar sa implementeze C.R.U.D.E
+
+class FilmRepository:
+    def __init__(self):
+        self.__filme = {}
+
+    def getAll(self):
+        '''
+        returneaza lista de filme
+        :return: o lista de obiecte de tipul Film
+        '''
+
+        return list(self.__filme.values())
+
+    def getById(self, idFilm):
+        '''
+        returneaza filmul cu id-ul dat
+        :param idFilm: string
+        :return: un obiect de tipul angajat daca exista unul cu id-ul dat, alfel none
+        '''
+
+        #return self.__filme.get(idFilm, None) (1)
+        # (1) si (2) sunt echivalente
+
+        if idFilm in self.__filme:
+            return self.__filme[idFilm]         #(2)
+        return None
+
+
+    def adauga(self, film):
+        '''
+        adauga un film in dictionar
+        :param film: obiect de tipul Film
+        :return:
+        '''
+
+        if self.getById(film.getidFilm()) is not None:
+            raise KeyError("Exista deja un film cu id-ul dat")
+        self.__filme[film.getidFilm()] = film
+
+    def modifica(self, filmNou):
+        '''
+        modifica un film dupa id
+        :param film: obiect de tipul Film
+        :return:
+        '''
+
+        if self.getById(filmNou.getidFilm()) is None:
+            raise KeyError("Nu exista niciun film cu id-ul dat")
+        self.__filme[filmNou.getidFilm()] = filmNou
+
+    def sterge(self, idFilm):
+        '''
+        sterge un film dupa id
+        :param idFilm:
+        :return:
+        '''
+        if self.getById(idFilm) is None:
+            raise KeyError("Nu exista niciun film cu id-ul dat")
+        self.__filme.pop(idFilm)
