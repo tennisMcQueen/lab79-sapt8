@@ -1,14 +1,18 @@
+from repository.clientRepository import ClientRepository
 from service.FilmService import FilmService
 from repository.filmRepository import FilmRepository
-from teste.testAll import testAll
+from service.clientService import ClientService
+#from teste.testAll import testAll
 from ui.consola.consola import Consola
 
 
 def main():
-    testAll()
+    #testAll()
     filmRepository = FilmRepository()
-    filmService = FilmService(filmRepository)
-    consola = Consola(filmService)
+    clientRepository = ClientRepository()
+    clientService= ClientService(clientRepository,filmRepository)
+    filmService = FilmService(filmRepository,clientRepository)
+    consola = Consola(filmService,clientService)
 
     consola.meniu()
 
