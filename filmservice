@@ -1,11 +1,13 @@
 #doar cerintele din enuntul problemei, nu mai faci inca o data ce ai facut in repository
 from domeniu.film import Film
+from repository.clientRepository import ClientRepository
 from repository.filmRepository import FilmRepository
 
 
 class FilmService:
-    def __init__(self, filmRepository: FilmRepository):
+    def __init__(self, filmRepository: FilmRepository, clientRepository: ClientRepository):
         self.__FilmRepository = filmRepository
+        self.__ClientRepository = clientRepository
 
     def getAllFilme(self):
         '''
@@ -41,10 +43,14 @@ class FilmService:
         self.__FilmRepository.modifica(filmNou)
 
 
-    def sterge(self, idFilm):
+    def stergere(self, idFilm):
         '''
         sterge un film dupa id
         :param idFilm: string
         :return:
         '''
+        clienti = self.__ClientRepository.getAll()
+        for client in clienti:
+            if client.getIdFilm() == idFilm:
+                self.__ClientRepository.sterge(client.getidClient())
         self.__FilmRepository.sterge(idFilm)
