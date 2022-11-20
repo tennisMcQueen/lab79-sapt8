@@ -1,0 +1,52 @@
+from domeniu.client import Client
+from repository.clientRepository import ClientRepository
+from repository.filmRepository import FilmRepository
+
+
+class ClientService:
+    def __init__(self, clientRepository: ClientRepository, filmRepository: FilmRepository):
+        self.__clientRepository = clientRepository
+        self.__filmRepository = filmRepository
+
+    def getAllClienti(self):
+        '''
+        returneaza o lista de clienti
+        :return: o lista de obiecte de tipul Client
+        '''
+        return self.__clientRepository.getAll()
+
+    def adaugaClient(self, idClient,nume,cnp,idFilm):
+        '''
+        adauga un client in lista
+        :param idClient: string
+        :param nume:string
+        :param cnp:nr natural
+        :param idFilm:string
+        :return:
+        '''
+        if idFilm.strip() != "" and self.__filmRepository.getById(idFilm) is None:
+            raise ValueError("nu exista niciun film cu id-ul dat")
+        client = Client(idClient,nume,cnp, idFilm)
+        self.__clientRepository.adauga(client)
+
+    def modificaClient(self,idClient,numeNou,cnpNou,idFilmNou):
+        '''
+        modifica un client din lista dupa id
+        :param idClient: string
+        :param numeNou: string
+        :param cnpNou: nr natural
+        :param idFilmNou: string
+        :return:
+        '''
+        if idFilmNou != "" and self.__filmRepository.getById(idFilmNou) is None:
+            raise ValueError("nu exista niciun film cu id-ul dat")
+        client = Client(idClient,numeNou,cnpNou,idFilmNou)
+        self.__clientRepository.modifica(client)
+
+    def stergeClient(self,idClient):
+        '''
+        sterge un client din lista
+        :param idClient: string
+        :return:
+        '''
+        self.__clientRepository.sterge(idClient)
