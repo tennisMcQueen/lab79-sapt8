@@ -1,0 +1,38 @@
+class Client:
+    def __init__(self, idClient, nume, cnp, idFilm):
+
+        #relatie de 1 la n intre entitati, adica un client poate inchiria mai multe filme
+        #dar un film poate fi inchiriat doar la o persoana o data, nu exista mai multe
+        #exemplare de acelasi film gen
+
+        self.__idClient = idClient
+        self.__nume = nume
+        self.__cnp = cnp
+        self.__idFilm = idFilm
+
+    def getidClient(self):
+        return self.__idClient
+
+    def getnume(self):
+        return self.__nume
+
+    def getcnp(self):
+        return self.__cnp
+
+    def getIdFilm(self):
+        return self.__idFilm
+
+    def setIdFilm(self,idFilm):
+        self.__idFilm = idFilm
+
+    def setidClient(self, idClient):
+        self.__idClient = idClient
+
+    def setnume(self, nume):
+        self.__nume = nume
+
+    def setcnp(self, cnp):
+        self.__cnp = cnp
+
+    def __str__(self):
+        return f"id: {self.__idClient}, nume: {self.__nume}, cnp: {self.__cnp}, id film: {self.__idFilm} "
