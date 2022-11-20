@@ -1,0 +1,60 @@
+#rolul Repository este doar sa implementeze C.R.U.D.E
+
+class ClientRepository:
+    def __init__(self):
+        self.__clienti = {}
+
+    def getAll(self):
+        '''
+        returneaza lista de clienti
+        :return: o lista de obiecte de tipul Client
+        '''
+
+        return list(self.__clienti.values())
+
+    def getById(self, idClient):
+        '''
+        returneaza clientul cu id-ul dat
+        :param idClient: string
+        :return: un obiect de tipul client daca exista unul cu id-ul dat, alfel none
+        '''
+
+        #return self.__clienti.get(idClient, None) (1)
+        # (1) si (2) sunt echivalente
+
+        if idClient in self.__clienti:
+            return self.__clienti[idClient]         #(2)
+        return None
+
+
+    def adauga(self, client):
+        '''
+        adauga un client in dictionar
+        :param client: obiect de tipul Client
+        :return:
+        '''
+
+        if self.getById(client.getidClient()) is not None:
+            raise KeyError("Exista deja un client cu id-ul dat")
+        self.__clienti[client.getidClient()] = client
+
+    def modifica(self, clientNou):
+        '''
+        modifica un client dupa id
+        :param client: obiect de tipul Client
+        :return:
+        '''
+
+        if self.getById(clientNou.getidClient()) is None:
+            raise KeyError("Nu exista niciun client cu id-ul dat")
+        self.__clienti[clientNou.getidClient()] = clientNou
+
+    def sterge(self, idClient):
+        '''
+        sterge un client dupa id
+        :param idClient:
+        :return:
+        '''
+        if self.getById(idClient) is None:
+            raise KeyError("Nu exista niciun client cu id-ul dat")
+        self.__clienti.pop(idClient)
