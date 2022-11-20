@@ -1,8 +1,11 @@
 from service.FilmService import FilmService
+from service.clientService import ClientService
+
 
 class Consola:
-    def __init__(self, filmService: FilmService):
+    def __init__(self, filmService: FilmService, clientService: ClientService):
         self.__filmService = filmService
+        self.__clientService = clientService
 
     def adaugaFilm(self):
         try:
@@ -13,6 +16,9 @@ class Consola:
             self.__filmService.adauga(idFilm,titlu,descriere,gen)
         except KeyError as e:
             print(e)
+        except ValueError as e:
+            print(e)
+
 
     def modificaFilm(self):
         try:
@@ -23,11 +29,45 @@ class Consola:
             self.__filmService.modifica(idFilm,titluNou,descriereNou,genNou)
         except KeyError as e:
             print(e)
+        except ValueError as e:
+            print(e)
+
 
     def sterge(self):
         try:
             idFilm = input("Dati id-ul filmului de sters")
-            self.__filmService.sterge(idFilm)
+            self.__filmService.stergere(idFilm)
+        except KeyError as e:
+            print(e)
+
+    def adaugaClient(self):
+        try:
+            idClient= input("dati id-ul clientului: ")
+            nume = input("dati numele clientului: ")
+            cnp= int(input("Dati cnp: "))
+            idFilm = input("Dati id-ul filmului (sau nimic daca nu avem) ")
+            self.__clientService.adaugaClient(idClient,nume,cnp,idFilm)
+        except KeyError as e:
+            print(e)
+        except ValueError as e:
+            print(e)
+
+    def modificaClient(self):
+        try:
+            idClient = input("dati id-ul clientului de modificat ")
+            numeNou = input("dati numele nou ")
+            cnpNou = int(input("Dati cnp nou: "))
+            idFilmNou = input("Dati id-ul filmului nou ")
+            self.__clientService.modificaClient(idClient,numeNou,cnpNou,idFilmNou)
+        except KeyError as e:
+            print(e)
+        except ValueError as e:
+            print(e)
+
+    def stergeClient(self):
+        try:
+            idClient = input("dati id-ul clientului de sters ")
+            self.__clientService.stergeClient(idClient)
         except KeyError as e:
             print(e)
 
@@ -40,7 +80,11 @@ class Consola:
         print("1.Adauga film ")
         print("2.Modifica film ")
         print("3.Stege film ")
+        print("4.Adauga client")
+        print("5.Modifica client")
+        print("6.Sterge client")
         print("a.Afiseaza filmele ")
+        print("c.Afiseaza clientii")
         print("x.Iesire ")
 
     def meniu(self):
@@ -53,8 +97,16 @@ class Consola:
                 self.modificaFilm()
             elif optiune == "3":
                 self.sterge()
+            elif optiune =="4":
+                self.adaugaClient()
+            elif optiune == "5":
+                self.modificaClient()
+            elif optiune == "6":
+                self.stergeClient()
             elif optiune == "a":
                 self.afiseaza(self.__filmService.getAllFilme())
+            elif optiune == "c":
+                self.afiseaza(self.__clientService.getAllClienti())
             elif optiune == "x":
                 break
             else:
